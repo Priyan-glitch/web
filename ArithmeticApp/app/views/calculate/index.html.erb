@@ -1,0 +1,18 @@
+<h1>Simple Calculator</h1>
+
+<%= form_with url: "/calculate", method: :post, local: true, data: { turbo: false } do %>
+  <label>Number 1:</label>
+  <%= number_field_tag :num1, nil, step: :any %><br><br>
+
+  <label>Number 2:</label>
+  <%= number_field_tag :num2, nil, step: :any %><br><br>
+
+  <label>Operation:</label>
+  <%= select_tag :operation, options_for_select([['+', '+'], ['-', '-'], ['*', '*'], ['/', '/']]) %><br><br>
+
+  <%= submit_tag "Calculate" %>
+<% end %>
+
+<% if @result %>
+  <h2>Result: <%= @result %></h2>
+<% end %>
