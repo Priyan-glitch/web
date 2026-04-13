@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Order</title>
+</head>
+<body>
+
+<h3>Restaurant Order Form</h3>
+
+<form onsubmit="return submitForm()">
+
+    Name:
+    <input type="text" id="name"><br><br>
+
+    Menu:<br>
+    <input type="checkbox" value="100" onclick="calc()"> Pizza (100)<br>
+    <input type="checkbox" value="150" onclick="calc()"> Burger (150)<br>
+    <input type="checkbox" value="80" onclick="calc()"> Pasta (80)<br>
+    <input type="checkbox" value="50" onclick="calc()"> Juice (50)<br><br>
+
+    Total: <span id="total">0</span><br><br>
+
+    Order Type:<br>
+    <input type="radio" name="type" value="pickup" onclick="toggleAddr()"> Pickup<br>
+    <input type="radio" name="type" value="delivery" onclick="toggleAddr()"> Delivery<br><br>
+
+    <div id="addrDiv" style="display:none;">
+        Address:
+        <input type="text" id="addr"><br><br>
+    </div>
+
+    <button type="submit">Submit</button>
+    <button type="reset" onclick="resetAll()">Reset</button>
+
+</form>
+
+<p id="msg"></p>
+
+<script>
+function calc() {
+    let items = document.querySelectorAll("input[type='checkbox']");
+    let total = 0;
+
+    items.forEach(i => {
+        if (i.checked) total += Number(i.value);
+    });
+
+    document.getElementById("total").innerText = total;
+}
+
+function toggleAddr() {
+    let type = document.querySelector("input[name='type']:checked").value;
+    let div = document.getElementById("addrDiv");
+
+    div.style.display = (type === "delivery") ? "block" : "none";
+}
+
+function submitForm() {
+    let name = document.getElementById("name").value.trim();
+    let items = document.querySelectorAll("input[type='checkbox']");
+    let type = document.querySelector("input[name='type']:checked");
+    let addr = document.getElementById("addr").value.trim();
+    let total = document.getElementById("total").innerText;
+
+    let selected = false;
+
+    // Name validation
+    if (name === "") {
+        alert("Enter name");
+        return false;
+    }
+
+    // Item validation
+    items.forEach(i => {
+        if (i.checked) selected = true;
+    });
+
+    if (!selected) {
+        alert("Select at least one item");
+        return false;
+    }
+
+    // Order type validation
+    if (!type) {
+        alert("Select order type");
+        return false;
+    }
+
+    // Address validation
+    if (type.value === "delivery" && addr === "") {
+        alert("Enter address for delivery");
+        return false;
+    }
+
+    // AJAX simulation
+    let data = {
+        name: name,
+        total: total,
+        type: type.value,
+        address: addr
+    };
+
+    // Simulate async request
+    setTimeout(() => {
+        document.getElementById("msg").innerText =
+            "Order Successful | Total: " + total;
+    }, 500);
+
+    return false; // prevent actual submit
+}
+
+function resetAll() {
+    document.getElementById("total").innerText = 0;
+    document.getElementById("addrDiv").style.display = "none";
+    document.getElementById("msg").innerText = "";
+}
+</script>
+
+</body>
+</html>

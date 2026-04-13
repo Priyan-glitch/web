@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Form</title>
+  <style>
+    .error { color: red; }
+  </style>
+</head>
+<body>
+
+<form id="registerForm">
+  Username: <input type="text" id="username"><br>
+  <span id="userError" class="error"></span><br>
+
+  Email: <input type="text" id="email"><br>
+  <span id="emailError" class="error"></span><br>
+
+  Password: <input type="password" id="password"><br>
+  <span id="passError" class="error"></span><br>
+
+  Confirm Password: <input type="password" id="confirmPassword"><br>
+  <span id="confirmError" class="error"></span><br>
+
+  <button type="submit">Register</button>
+</form>
+
+<script>
+document.getElementById("registerForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let username = document.getElementById("username").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+
+    let valid = true;
+
+    // Clear previous errors
+    document.querySelectorAll(".error").forEach(el => el.innerText = "");
+
+    // Username validation
+    if (username.length < 5) {
+        document.getElementById("userError").innerText = "Username must be at least 5 characters";
+        valid = false;
+    }
+
+    // Email validation
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (!email.match(emailPattern)) {
+        document.getElementById("emailError").innerText = "Enter a valid email";
+        valid = false;
+    }
+
+    // Password validation
+    let passPattern = /^(?=.*\d).{8,}$/;
+    if (!password.match(passPattern)) {
+        document.getElementById("passError").innerText = "Password must be 8+ chars & include a number";
+        valid = false;
+    }
+
+    // Confirm password
+    if (password !== confirmPassword) {
+        document.getElementById("confirmError").innerText = "Passwords do not match";
+        valid = false;
+    }
+
+    if (valid) {
+        alert("Registration Successful!");
+    }
+});
+</script>
+
+</body>
+</html>

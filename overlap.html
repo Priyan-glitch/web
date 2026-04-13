@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.container {
+  position: relative;
+}
+
+img {
+  width: 150px;
+  position: absolute;
+  transition: 0.3s;
+}
+
+.img1 { left: 0px; }
+.img2 { left: 50px; top: 30px; }
+.img3 { left: 100px; top: 60px; }
+
+img:hover {
+  transform: scale(1.3);
+  z-index: 1;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <img src="https://picsum.photos/150?random=1" class="img1">
+  <img src="https://picsum.photos/150?random=2" class="img2">
+  <img src="https://picsum.photos/150?random=3" class="img3">
+</div>
+
+</body>
+</html>

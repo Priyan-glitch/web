@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz App</title>
+</head>
+<body>
+
+<div id="quiz"></div>
+<button onclick="submitQuiz()">Submit</button>
+<h2 id="result"></h2>
+
+<script>
+const quizData = [
+  {
+    question: "What is HTML?",
+    options: ["Programming Language", "Markup Language", "Database", "OS"],
+    answer: 1
+  },
+  {
+    question: "Which is used for styling?",
+    options: ["HTML", "Python", "CSS", "C++"],
+    answer: 2
+  },
+  {
+    question: "Which is JavaScript framework?",
+    options: ["React", "MySQL", "Linux", "Photoshop"],
+    answer: 0
+  }
+];
+
+const quizContainer = document.getElementById("quiz");
+
+quizData.forEach((q, index) => {
+  let div = document.createElement("div");
+
+  div.innerHTML = `<h3>${q.question}</h3>` +
+    q.options.map((opt, i) =>
+      `<input type="radio" name="q${index}" value="${i}"> ${opt}<br>`
+    ).join("");
+
+  quizContainer.appendChild(div);
+});
+
+function submitQuiz() {
+  let score = 0;
+
+  quizData.forEach((q, index) => {
+    let selected = document.querySelector(`input[name="q${index}"]:checked`);
+    if (selected && parseInt(selected.value) === q.answer) {
+      score++;
+    }
+  });
+
+  document.getElementById("result").innerText =
+    "Your Score: " + score + "/" + quizData.length;
+}
+</script>
+
+</body>
+</html>

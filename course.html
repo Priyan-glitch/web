@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Registration</title>
+</head>
+<body>
+
+<h3>Student Course Registration</h3>
+
+<form onsubmit="return validateForm()">
+
+    Name:
+    <input type="text" id="name"><br><br>
+
+    Courses:<br>
+    <input type="checkbox" value="3"> Course A (3 credits)<br>
+    <input type="checkbox" value="4"> Course B (4 credits)<br>
+    <input type="checkbox" value="2"> Course C (2 credits)<br>
+    <input type="checkbox" value="5"> Course D (5 credits)<br><br>
+
+    Semester:<br>
+    <input type="radio" name="sem" value="Fall" onclick="showTiming()"> Fall<br>
+    <input type="radio" name="sem" value="Winter" onclick="showTiming()"> Winter<br>
+    <input type="radio" name="sem" value="Spring" onclick="showTiming()"> Spring<br><br>
+
+    <div id="timingDiv" style="display:none;">
+        Preferred Timing:
+        <input type="text" id="timing"><br><br>
+    </div>
+
+    <button type="submit">Submit</button>
+    <button type="reset" onclick="resetAll()">Reset</button>
+
+</form>
+
+<p id="msg"></p>
+
+<script>
+function showTiming() {
+    let sem = document.querySelector("input[name='sem']:checked").value;
+    let div = document.getElementById("timingDiv");
+
+    if (sem === "Fall") {
+        div.style.display = "block";
+    } else {
+        div.style.display = "none";
+    }
+}
+
+function validateForm() {
+    let name = document.getElementById("name").value.trim();
+    let courses = document.querySelectorAll("input[type='checkbox']");
+    let sem = document.querySelector("input[name='sem']:checked");
+    let timing = document.getElementById("timing").value.trim();
+
+    let totalCredits = 0;
+    let selected = false;
+
+    // Name validation
+    if (name === "") {
+        alert("Enter name");
+        return false;
+    }
+
+    // Courses validation + credit sum
+    courses.forEach(c => {
+        if (c.checked) {
+            selected = true;
+            totalCredits += Number(c.value);
+        }
+    });
+
+    if (!selected) {
+        alert("Select at least one course");
+        return false;
+    }
+
+    // Semester validation
+    if (!sem) {
+        alert("Select semester");
+        return false;
+    }
+
+    // Fall timing condition
+    if (sem.value === "Fall" && timing === "") {
+        alert("Enter preferred timing for Fall");
+        return false;
+    }
+
+    document.getElementById("msg").innerText =
+        "Registration Successful | Total Credits: " + totalCredits;
+
+    return false; // prevent actual submit
+}
+
+function resetAll() {
+    document.getElementById("timingDiv").style.display = "none";
+    document.getElementById("msg").innerText = "";
+}
+</script>
+
+</body>
+</html>

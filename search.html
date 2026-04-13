@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Search</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    .highlight {
+      background-color: yellow;
+    }
+  </style>
+</head>
+<body>
+
+<input type="text" id="search" placeholder="Search articles...">
+
+<ul id="list">
+  <li>JavaScript Basics</li>
+  <li>Learn Python</li>
+  <li>Web Development Guide</li>
+  <li>React Tutorial</li>
+  <li>CSS Styling Tips</li>
+</ul>
+
+<script>
+$("#search").on("keyup", function() {
+    let value = $(this).val().toLowerCase();
+
+    $("#list li").each(function() {
+        let text = $(this).text();
+
+        // Reset original text
+        $(this).html(text);
+
+        if (text.toLowerCase().includes(value) && value !== "") {
+            let regex = new RegExp(`(${value})`, "gi");
+            let highlighted = text.replace(regex, '<span class="highlight">$1</span>');
+            $(this).html(highlighted);
+            $(this).show();
+        } else if (value === "") {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+});
+</script>
+
+</body>
+</html>

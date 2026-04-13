@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FAQ</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h3>FAQ</h3>
+
+<div class="q">What is HTML?</div>
+<div class="a">HTML is used to structure web pages.</div>
+
+<div class="q">What is CSS?</div>
+<div class="a">CSS is used to style web pages.</div>
+
+<div class="q">What is JavaScript?</div>
+<div class="a">JavaScript adds interactivity.</div>
+
+<script>
+$(".a").hide();
+
+$(".q").click(function() {
+    let ans = $(this).next();
+
+    if (ans.is(":visible")) {
+        ans.slideUp();
+    } else {
+        $(".a").slideUp();   // close others
+        ans.slideDown();     // open current
+    }
+});
+</script>
+
+</body>
+</html>

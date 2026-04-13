@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Countdown Timer</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h2 id="timer">05:00</h2>
+<button id="buyBtn">Buy Now</button>
+
+<script>
+$(document).ready(function() {
+    let time = 300; // 5 minutes in seconds
+
+    let countdown = setInterval(function() {
+        let minutes = Math.floor(time / 60);
+        let seconds = time % 60;
+
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+
+        $("#timer").text(minutes + ":" + seconds);
+
+        time--;
+
+        if (time < 0) {
+            clearInterval(countdown);
+            $("#timer").text("00:00");
+            $("#buyBtn").prop("disabled", true).text("Expired");
+        }
+    }, 1000);
+});
+</script>
+
+</body>
+</html>

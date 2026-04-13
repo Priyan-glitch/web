@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flight Booking</title>
+</head>
+<body>
+
+<h3>Flight Booking System</h3>
+
+<form onsubmit="return validate()">
+
+Passenger Name:
+<input type="text" id="name"><br><br>
+
+Destination:<br>
+<input type="checkbox" value="1000" onclick="calc()"> Chennai (1000)<br>
+<input type="checkbox" value="1500" onclick="calc()"> Mumbai (1500)<br>
+<input type="checkbox" value="2000" onclick="calc()"> Delhi (2000)<br>
+<input type="checkbox" value="2500" onclick="calc()"> Bangalore (2500)<br><br>
+
+Travel Class:<br>
+<input type="radio" name="class" value="1" onclick="calc(); seat()"> Economy<br>
+<input type="radio" name="class" value="1.5" onclick="calc(); seat()"> Business<br>
+<input type="radio" name="class" value="2" onclick="calc(); seat()"> First<br><br>
+
+<div id="seatDiv" style="display:none;">
+Seat Preference:
+<select id="seat">
+<option value="">Select</option>
+<option>Window</option>
+<option>Aisle</option>
+</select><br><br>
+</div>
+
+Total Price: <span id="total">0</span><br><br>
+
+<button type="submit">Submit</button>
+<button type="reset" onclick="resetForm()">Reset</button>
+
+</form>
+
+<p id="msg"></p>
+
+<script>
+function calc() {
+    let dest = document.querySelectorAll("input[type='checkbox']");
+    let cls = document.querySelector("input[name='class']:checked");
+    let total = 0;
+
+    dest.forEach(d => {
+        if (d.checked) total += Number(d.value);
+    });
+
+    if (cls) total *= Number(cls.value);
+
+    document.getElementById("total").innerText = total;
+}
+
+function seat() {
+    let cls = document.querySelector("input[name='class']:checked");
+    if (!cls) return;
+
+    let val = cls.value;
+
+    if (val == 1.5 || val == 2) {
+        document.getElementById("seatDiv").style.display = "block";
+    } else {
+        document.getElementById("seatDiv").style.display = "none";
+    }
+}
+
+function validate() {
+    let name = document.getElementById("name").value.trim();
+    let dest = document.querySelectorAll("input[type='checkbox']:checked");
+    let cls = document.querySelector("input[name='class']:checked");
+    let seat = document.getElementById("seat").value;
+    let total = document.getElementById("total").innerText;
+
+    // Name validation
+    if (name.length < 2) {
+        alert("Name must be at least 2 characters");
+        return false;
+    }
+
+    // Destination validation
+    if (dest.length === 0) {
+        alert("Select at least one destination");
+        return false;
+    }
+
+    // Class validation
+    if (!cls) {
+        alert("Select travel class");
+        return false;
+    }
+
+    // Seat validation
+    if ((cls.value == 1.5 || cls.value == 2) && seat === "") {
+        alert("Select seat preference");
+        return false;
+    }
+
+    document.getElementById("msg").innerText =
+        "Booking Successful | Total: " + total;
+
+    return false; // prevent actual submit
+}
+
+function resetForm() {
+    document.getElementById("total").innerText = 0;
+    document.getElementById("seatDiv").style.display = "none";
+    document.getElementById("msg").innerText = "";
+}
+</script>
+
+</body>
+</html> 
